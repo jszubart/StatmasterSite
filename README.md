@@ -1,1 +1,1 @@
-StatmasterSite
+StatmasterSite by Jakub Szubart

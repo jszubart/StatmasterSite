@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Statmaster{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+            <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ path('homepage') }}">
+            <img src="{{ asset('assets/uploads/logo.png') }}" alt="" height="45px" width="200px">
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto mr-5">
+                {% if not is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Register</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item dropdown ml-3 ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Statistics
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('game_index') }}">Games </a>
+                        <a class="dropdown-item" href="#">Simple statistics ranking </a>
+                        <a class="dropdown-item" href="#">Advanced statistics ranking </a>
+                    </div>
+                </li>
+                {% if is_granted('ROLE_USER') %}
+                <li class="nav-item dropdown mr-auto ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('account') }}">Account</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                </li>
+                {% endif  %}
+            </ul>
+        </div>
+    </nav>
+        <div class = "container-fluid text-center">
+{#            {% for label, messages in app.flashes %}#}
+{#                {% for message in messages %}#}
+{#                    <div class="alert alert-{{ label }}">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            {% endfor %}#}
+            {% block body %}{% endblock %}
+            {% block javascripts %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Games list{% endblock %}
+
+{% block body %}
+    <h2>Games</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.id }}</td>
+                <td>{{ game.date }}</td>
+                <td>{{ game.name }}</td>
+                <td>
+                    <a href="{{ path('game_show', {'id': game.id}) }}">
+                        <button type = "button" class = "btn btn-dark">Show</button>
+                    </a>
+                    <a href="{{ path('game_edit', {'id': game.id}) }}">
+                        <button type = "button" class = "btn btn-primary">Edit</button>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('game_new') }}">Create new</a>
+{% endblock %}
