@@ -1,4 +1,26 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="mt-2 mb-2">
+    {{ form_start(form) }}
+    {{ form_errors(form.teamName) }}
+    {{ form_errors(form.gameCoach) }}
+    <div class="container text-center">
+        <div class="col mx-auto">
+            <div class = "row justify-content-center">
+                {{ form_label(form.teamName) }}
+            </div>
+            <div class = "row justify-content-center">
+                {{ form_widget(form.teamName) }}
+            </div>
+        </div>
+        <div class="col mx-auto">
+            <div class = "row justify-content-center">
+                {{ form_label(form.gameCoach) }}
+            </div>
+            <div class = "row justify-content-center">
+                {{ form_widget(form.gameCoach) }}
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-dark mt-2">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</div>
+

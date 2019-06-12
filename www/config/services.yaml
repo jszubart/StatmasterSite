@@ -24,5 +24,17 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Controller\Rest\:
+        resource: '../src/Controller/Rest'
+
+    console_command.import_events:
+        class: App\Command\ImportGameEventsCommand
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - {name: console.command}
+
+    sensio_framework_extra.view.listener:
+        alias: Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

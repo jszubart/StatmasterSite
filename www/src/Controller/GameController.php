@@ -36,6 +36,7 @@ class GameController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $game->setGameDate(new \DateTime());
             $entityManager->persist($game);
             $entityManager->flush();
 

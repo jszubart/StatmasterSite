@@ -3,29 +3,28 @@
 namespace App\Form;
 
 use App\Entity\Game;
+use App\Entity\GameStatistic;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
-class GameType extends AbstractType
+class GameStatisticType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('teamName')
-            ->add('gameCoach' ,TextType::class ,[
-                'label' => 'Coach'
-            ])
-        ;
+            ->add('playerName')
+            ->add('eventName')
+            ->add('score')
+            ->add('game')
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Game::class,
+            'data_class' => GameStatistic::class,
             'csrf_protection' => false,
             'allow_extra_fields' => true,
         ]);

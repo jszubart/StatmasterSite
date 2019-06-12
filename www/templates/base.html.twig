@@ -9,12 +9,14 @@
             <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
             <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
         {% endblock %}
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{ path('homepage') }}">
-            <img src="{{ asset('assets/uploads/logo.png') }}" alt="" height="45px" width="200px">
+            <img src="{{ asset('assets/uploads/logo.png') }}" alt="" height="50px" width="200px">
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto mr-5">
@@ -32,7 +34,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ path('game_index') }}">Games </a>
-                        <a class="dropdown-item" href="#">Simple statistics ranking </a>
+                        <a class="dropdown-item" href="{{ path('game_event_index') }}">Simple statistics ranking </a>
                         <a class="dropdown-item" href="#">Advanced statistics ranking </a>
                     </div>
                 </li>

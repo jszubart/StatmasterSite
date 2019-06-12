@@ -5,21 +5,21 @@
 {% block body %}
     <h2>Games</h2>
 
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
                 <th>Date</th>
-                <th>Name</th>
+                <th>Team Name</th>
+                <th>Coach</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
         {% for game in games %}
             <tr>
-                <td>{{ game.id }}</td>
-                <td>{{ game.date }}</td>
-                <td>{{ game.name }}</td>
+                <td>{{ game.gameDate|date('Y-m-d H:i') }}</td>
+                <td>{{ game.teamName }}</td>
+                <td>{{ game.gameCoach }}</td>
                 <td>
                     <a href="{{ path('game_show', {'id': game.id}) }}">
                         <button type = "button" class = "btn btn-dark">Show</button>
@@ -37,5 +37,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('game_new') }}">Create new</a>
+    <a href="{{ path('game_new') }}">
+        <button type = "button" class = "btn btn-dark">New Game</button>
+    </a>
 {% endblock %}
