@@ -1,27 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Game{% endblock %}
+{% block title %}Game {{ game.id }} Details{% endblock %}
 
 {% block body %}
-    <h2>Game details {{ game.gameDate|date('Y-m-d H:i') }}</h2>
+    <h2> Game {{ game.id }}</h2>
+    <h2>Team: {{ game.teamName|capitalize }}</h2>
+    <h4>Coach: {{ game.gameCoach }}</h4>
+    <h5>Date: {{ game.gameDate|date('Y-m-d H:i') }}</h5>
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Player</th>
             <th>Event</th>
-            <th>Value</th>
+            <th>Type</th>
+            <th>Score</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-            {% for statistic in game.statistics %}
-            <tr>
-                <td>{{ statistic.playerName }}</td>
-                <td>{{ statistic.eventName }}</td>
-                <td>{{ statistic.score}}</td>
+
+            {% for game_statistic in game.statistics %}
+                <tr>
+                    <th>{{ game_statistic.playerName }}</th>
+                    <th>
+                        <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">
+                            {{ game_statistic.gameEvent.name }}
+                        </a>
+                    </th>
+                    <th>{{ game_statistic.gameEvent.type }}</th>
+                    <td>{{ game_statistic.gameEvent.score}}</td>
+                    <td>
+                        <div>
+                            <div class="buttons">
+                                <a href="{{ path('game_statistic_show', {'id': game_statistic.id}) }}">
+                                    <button class="btn btn-primary btn-sm">Show</button>
+                                </a>
+                            </div>
+                            <div>
+                                {{ include('game_statistic/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+
+                    </td>
             </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">No records found, if you want to create some record please click button "Create Event"</td>
+                    <td colspan="4">No records found, if you want to create some record please click button "Create New Event"</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -29,19 +53,28 @@
     <table class="table table-dark">
         <thead class="thead-dark">
         <tr>
-            <th>Event summary : {{ game.getSummaryScore }}</th>
+            <th>Events summary : {{ game.getSummaryScore }}</th>
         </tr>
         </thead>
     </table>
-    <div class="mb-2">
-        <a href="#">
-            <button class="btn btn-dark">Create New Event</button>
-        </a>
+
+    <div>
+        <div>
+            <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
+                <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
+            </a>
+        </div>
+        <div class="mt-2">
+            <a href="{{ path('game_edit', {'id': game.id}) }}">
+                <button type = "button" class = "btn btn-primary">Edit game</button>
+            </a>
+        </div>
+        <div class="mt-2">
+            <a href="{{ path('game_index') }}">
+                <button class="btn btn-primary">Back</button>
+            </a>
+        </div>
     </div>
-    {{ include('game/_delete_form.html.twig') }}
-    <div class="mt-2">
-        <a href="{{ path('game_index') }}">
-            <button class="btn btn-primary">Back to list</button>
-        </a>
-    </div>
+
 {% endblock %}
+

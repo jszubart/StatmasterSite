@@ -18,5 +18,4 @@ class GameStatisticRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, GameStatistic::class);
     }
-
 }

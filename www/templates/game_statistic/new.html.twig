@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New event{% endblock %}
+
+{% block body %}
+    <h2>Create new Event</h2>
+
+    {{ include('game_statistic/_form.html.twig') }}
+
+    <div class="mt-2">
+        <a href="{{ path('game_statistic_index') }}">
+            <button class="btn btn-primary">Back</button>
+        </a>
+    </div>
+
+{% endblock %}

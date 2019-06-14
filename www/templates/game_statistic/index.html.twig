@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GameStatistic index{% endblock %}
+
+{% block body %}
+    <h2>Statistics index</h2>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Event Id</th>
+                <th>Player</th>
+                <th>Team</th>
+                <th>Game Date</th>
+                <th>Game Coach</th>
+                <th>Event</th>
+                <th>Score</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for game_statistic in game_statistics %}
+            <tr>
+                <td>{{ game_statistic.id }}</td>
+                <th>{{ game_statistic.playerName }}</th>
+                <td>{{ game_statistic.game.teamName|capitalize }}</td>
+                <th>{{ game_statistic.game.gameDate|date('Y-m-d H:i') }}</th>
+                <td>{{ game_statistic.game.gameCoach}}</td>
+                <th>
+                    <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">
+                        {{ game_statistic.gameEvent.name }}
+                    </a>
+                </th>
+                <td>{{ game_statistic.gameEvent.score }}</td>
+                <td>
+                    <a href="{{ path('game_statistic_show', {'id': game_statistic.id}) }}">
+                        <button class="btn btn-primary btn-sm">Show</button>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

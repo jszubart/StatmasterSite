@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block body %}
+    <h2>Edit Event</h2>
+
+    {{ include('game_statistic/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('game_statistic_index') }}">
+        <button class="btn btn-primary">Back</button>
+    </a>
+
+{% endblock %}

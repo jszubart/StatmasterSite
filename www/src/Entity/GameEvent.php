@@ -31,6 +31,11 @@ class GameEvent
      */
     private $score;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\GameStatistic", mappedBy="gameEvent")
+     */
+    private $gameStatistic;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class GameEvent
     public function setScore(int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getGameStatistic(): ?GameStatistic
+    {
+        return $this->gameStatistic;
+    }
+
+    public function setGameStatistic(?GameStatistic $gameStatistic): self
+    {
+        $this->gameStatistic = $gameStatistic;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Controller\Rest;
 
 use App\Entity\Game;
+use App\Entity\GameEvent;
 use App\Entity\GameStatistic;
 use App\Form\GameStatisticType;
 use App\Form\GameType;
@@ -39,6 +40,7 @@ class RestController extends AbstractFOSRestController implements ClassResourceI
         $gameDate = date_create_from_format('d-M-Y H:i', $data[0]['gameDate']);
         $gameCoach = $data[0]['teamCoach'];
         $repository = $this->entityManager->getRepository(Game::class);
+        $repository_event = $this->entityManager->getRepository(GameEvent::class);
 
         if ($repository->findOneBy(['gameDate' => $gameDate, 'teamName' => $teamName ]) == null){
             $game = new Game ;
@@ -54,17 +56,12 @@ class RestController extends AbstractFOSRestController implements ClassResourceI
 
             foreach ($data as $object) {
                 $gameStatistics = new GameStatistic();
-                $form_statistic = $this->createForm(GameStatisticType::class, $gameStatistics);
-                $form_statistic->submit($object);
-                if ($form_statistic->isSubmitted() && $form_statistic->isValid()) {
-                    $gameStatistics->setPlayerName($object['playerName']);
-                    $gameStatistics->setEventName($object['eventName']);
-                    $gameStatistics->setScore($object['score']);
-                    $gameStatistics->setGame($game);
-
-                    $statistics [] = [$object['playerName'], $object['eventName'], $object['score']];
-                    $this->entityManager->persist($gameStatistics);
-                }
+                $gameStatistics->setPlayerName($object['playerName']);
+                $event = $repository_event->findOneBy(['name' => $object['eventName']]);
+                $gameStatistics->setGameEvent($event);
+                $gameStatistics->setGame($game);
+                $statistics [] = [$object['playerName'], $event->getName(), $event->getScore()];
+                $this->entityManager->persist($gameStatistics);
             }
             $this->entityManager->flush();
             return $this->handleView($this->view([$game_info,$statistics],Response::HTTP_OK));

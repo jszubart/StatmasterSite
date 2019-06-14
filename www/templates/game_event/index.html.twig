@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GameEvent index{% endblock %}
+{% block title %}Game Events{% endblock %}
 
 {% block body %}
-    <h2>Game events</h2>
+    <h2>Game events list</h2>
 
     <table class="table table-striped">
         <thead class="thead-dark">
@@ -19,11 +19,13 @@
             <tr>
                 <th>{{ game_event.name }}</th>
                 <td>{{ game_event.type }}</td>
-                <td>{{ game_event.score }}</td>
+                <th>{{ game_event.score }}</th>
                 <td>
-
                     <a href="{{ path('game_event_show', {'id': game_event.id}) }}">
-                        <button class=" btn btn-primary">Show</button>
+                        <button class=" btn btn-primary btn-sm">Show</button>
+                    </a>
+                    <a href="#">
+                        <button class=" btn btn-warning btn-sm">Ranking</button>
                     </a>
                 </td>
             </tr>

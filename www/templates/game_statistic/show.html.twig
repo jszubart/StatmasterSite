@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game Statistic{% endblock %}
+
+{% block body %}
+    <h2>{{ game_statistic.id }}. "{{ game_statistic.gameEvent.name }}" by  {{ game_statistic.playerName }}</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ game_statistic.id }}</td>
+            </tr>
+            <tr>
+                <th>PlayerName</th>
+                <td>{{ game_statistic.playerName }}</td>
+            </tr>
+            <tr>
+                <th>EventName</th>
+                <td>{{ game_statistic.gameEvent.name }}</td>
+            </tr>
+            <tr>
+                <th>Score</th>
+                <td>{{ game_statistic.gameEvent.score }}</td>
+            </tr>
+            <tr>
+                <th>Team</th>
+                <td>{{ game_statistic.game.teamName|capitalize }}</td>
+            </tr>
+            <tr>
+                <th>Coach</th>
+                <td>{{ game_statistic.game.gameCoach }}</td>
+            </tr>
+        </tbody>
+    </table>
+  <div>
+      <div>
+          <a href="{{ path('game_statistic_edit', {'id': game_statistic.id}) }}">
+              <button class="btn btn-dark">Edit</button>
+          </a>
+      </div>
+      <div class="mt-2">
+          <a href="{{ path('game_statistic_index') }}">
+              <button class="btn btn-primary">Back</button>
+          </a>
+      </div>
+  </div>
+
+
+{% endblock %}

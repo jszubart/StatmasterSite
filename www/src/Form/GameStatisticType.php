@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Game;
+use App\Entity\GameEvent;
 use App\Entity\GameStatistic;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,10 +17,16 @@ class GameStatisticType extends AbstractType
     {
         $builder
             ->add('playerName')
-            ->add('eventName')
-            ->add('score')
-            ->add('game')
-            ;
+            ->add('gameEvent', EntityType::class, array(
+                'class' => GameEvent::class,
+                'attr' => array('style' => 'width: 175px'),
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+                    'choice_label' => 'name',)
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

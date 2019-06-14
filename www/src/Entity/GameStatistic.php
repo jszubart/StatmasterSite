@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,21 +24,21 @@ class GameStatistic
     private $playerName;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    private $eventName;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $score;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Game", inversedBy="statistics", cascade={"persist", "remove" }))
+     * @ORM\ManyToOne(targetEntity="App\Entity\Game", inversedBy="statistics", cascade={"persist"}))
      * @ORM\JoinColumn(nullable=false)
      */
     private $game;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\GameEvent", inversedBy="gameStatistic", cascade={"persist"} )
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $gameEvent;
+
+    public function __construct()
+    {
+        $this->gameEvent = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -65,38 +67,6 @@ class GameStatistic
     /**
      * @return mixed
      */
-    public function getEventName()
-    {
-        return $this->eventName;
-    }
-
-    /**
-     * @param mixed $eventName
-     */
-    public function setEventName($eventName): void
-    {
-        $this->eventName = $eventName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getScore()
-    {
-        return $this->score;
-    }
-
-    /**
-     * @param mixed $score
-     */
-    public function setScore($score): void
-    {
-        $this->score = $score;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getGame()
     {
         return $this->game;
@@ -110,4 +80,19 @@ class GameStatistic
         $this->game = $game;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getGameEvent()
+    {
+        return $this->gameEvent;
+    }
+
+    /**
+     * @param mixed $gameEvent
+     */
+    public function setGameEvent($gameEvent): void
+    {
+        $this->gameEvent = $gameEvent;
+    }
 }

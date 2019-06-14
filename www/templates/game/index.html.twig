@@ -1,31 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Games list{% endblock %}
+{% block title %}Games List{% endblock %}
 
 {% block body %}
-    <h2>Games</h2>
+    <h2>Games List</h2>
 
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th>Date</th>
-                <th>Team Name</th>
+                <th>Team</th>
                 <th>Coach</th>
+                <th>Date</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
         {% for game in games %}
             <tr>
-                <td>{{ game.gameDate|date('Y-m-d H:i') }}</td>
-                <td>{{ game.teamName }}</td>
+                <th>{{ game.teamName|capitalize }}</th>
                 <td>{{ game.gameCoach }}</td>
+                <td>{{ game.gameDate|date('Y-m-d H:i') }}</td>
                 <td>
                     <a href="{{ path('game_show', {'id': game.id}) }}">
-                        <button type = "button" class = "btn btn-dark">Show</button>
+                        <button type = "button" class = "btn btn-dark btn-sm">Show</button>
                     </a>
                     <a href="{{ path('game_edit', {'id': game.id}) }}">
-                        <button type = "button" class = "btn btn-primary">Edit</button>
+                        <button type = "button" class = "btn btn-primary btn-sm">Edit</button>
                     </a>
                 </td>
             </tr>

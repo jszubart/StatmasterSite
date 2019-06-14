@@ -34,7 +34,7 @@ class Game
     private $gameCoach;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\GameStatistic", mappedBy="game")
+     * @ORM\OneToMany(targetEntity="App\Entity\GameStatistic", mappedBy="game", cascade={"persist", "remove"})
      */
     private $statistics;
 
@@ -107,35 +107,12 @@ class Game
         return $this->statistics;
     }
 
-    public function addStatistic(GameStatistic $statistic): self
+    public function getSummaryScore()
     {
-        if (!$this->statistics->contains($statistic)) {
-            $this->statistics[] = $statistic;
-            $statistic->setGame($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStatistic(GameStatistic $statistic): self
-    {
-        if ($this->statistics->contains($statistic)) {
-            $this->statistics->removeElement($statistic);
-            // set the owning side to null (unless already changed)
-            if ($statistic->getGame() === $this) {
-                $statistic->setGame(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getSummaryScore(){
-
         $scores = $this->statistics;
         $summary = 0;
-        foreach ($scores as $score){
-            $summary+= $score->getScore();
+        foreach ($scores as $score) {
+            $summary += $score->getGameEvent()->getScore();
         }
         return $summary;
     }
