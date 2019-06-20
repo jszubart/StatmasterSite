@@ -38,9 +38,11 @@ class Game
      */
     private $statistics;
 
+
     public function __construct()
     {
         $this->statistics = new ArrayCollection();
+
     }
 
     /**

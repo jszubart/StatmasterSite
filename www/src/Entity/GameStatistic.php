@@ -19,11 +19,6 @@ class GameStatistic
     private $id;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    private $playerName;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Game", inversedBy="statistics", cascade={"persist"}))
      * @ORM\JoinColumn(nullable=false)
      */
@@ -34,6 +29,12 @@ class GameStatistic
      * @ORM\JoinColumn(nullable=false)
      */
     private $gameEvent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Player", inversedBy="statistic", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $player;
 
     public function __construct()
     {
@@ -46,22 +47,6 @@ class GameStatistic
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPlayerName()
-    {
-        return $this->playerName;
-    }
-
-    /**
-     * @param mixed $playerName
-     */
-    public function setPlayerName($playerName): void
-    {
-        $this->playerName = $playerName;
     }
 
     /**
@@ -95,4 +80,22 @@ class GameStatistic
     {
         $this->gameEvent = $gameEvent;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPlayer()
+    {
+        return $this->player;
+    }
+
+    /**
+     * @param mixed $player
+     */
+    public function setPlayer($player): void
+    {
+        $this->player = $player;
+    }
+
+
 }

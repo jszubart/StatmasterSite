@@ -17,7 +17,7 @@
         <tbody>
         {% for game in games %}
             <tr>
-                <th>{{ game.teamName|capitalize }}</th>
+                <th>{{ game.teamName }}</th>
                 <td>{{ game.gameCoach }}</td>
                 <td>{{ game.gameDate|date('Y-m-d H:i') }}</td>
                 <td>

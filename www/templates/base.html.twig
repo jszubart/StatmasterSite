@@ -27,13 +27,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_register') }}">Register</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('game_index') }}">Games </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('player_index') }}">Players </a>
+                    </li>
                 {% endif %}
                 <li class="nav-item dropdown ml-3 ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Statistics
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('game_index') }}">Games </a>
                         <a class="dropdown-item" href="{{ path('game_statistic_index') }}">Statistics index </a>
                         <a class="dropdown-item" href="{{ path('game_event_index') }}">Simple statistics ranking </a>
                         <a class="dropdown-item" href="#">Advanced statistics ranking </a>

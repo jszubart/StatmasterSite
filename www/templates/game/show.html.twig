@@ -4,9 +4,14 @@
 
 {% block body %}
     <h2> Game {{ game.id }}</h2>
-    <h2>Team: {{ game.teamName|capitalize }}</h2>
+    <h2>Team: {{ game.teamName }}</h2>
     <h4>Coach: {{ game.gameCoach }}</h4>
-    <h5>Date: {{ game.gameDate|date('Y-m-d H:i') }}</h5>
+    <h5>Date: {{ game.gameDate|date('Y-m-d') }}</h5>
+    <div class="mt-2 mb-2">
+        <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
+            <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
+        </a>
+    </div>
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
@@ -21,7 +26,11 @@
 
             {% for game_statistic in game.statistics %}
                 <tr>
-                    <th>{{ game_statistic.playerName }}</th>
+                    <th>
+                        <a class="link" href="{{ path('player_show',{'id': game_statistic.player.id }) }}">
+                            {{ game_statistic.player.name }}
+                        </a>
+                    </th>
                     <th>
                         <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">
                             {{ game_statistic.gameEvent.name }}
@@ -59,22 +68,11 @@
     </table>
 
     <div>
-        <div>
-            <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
-                <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
-            </a>
-        </div>
         <div class="mt-2">
             <a href="{{ path('game_edit', {'id': game.id}) }}">
-                <button type = "button" class = "btn btn-primary">Edit game</button>
-            </a>
-        </div>
-        <div class="mt-2">
-            <a href="{{ path('game_index') }}">
-                <button class="btn btn-primary">Back</button>
+                <button type = "button" class = "btn btn-primary">Edit game details</button>
             </a>
         </div>
     </div>
-
 {% endblock %}
 

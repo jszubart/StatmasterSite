@@ -22,9 +22,13 @@
         {% for game_statistic in game_statistics %}
             <tr>
                 <td>{{ game_statistic.id }}</td>
-                <th>{{ game_statistic.playerName }}</th>
+                <th>
+                    <a class="link" href="{{ path('player_show',{'id': game_statistic.player.id }) }}">
+                        {{ game_statistic.player.name }}
+                    </a>
+                </th>
                 <td>{{ game_statistic.game.teamName|capitalize }}</td>
-                <th>{{ game_statistic.game.gameDate|date('Y-m-d H:i') }}</th>
+                <td>{{ game_statistic.game.gameDate|date('Y-m-d') }}</td>
                 <td>{{ game_statistic.game.gameCoach}}</td>
                 <th>
                     <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">

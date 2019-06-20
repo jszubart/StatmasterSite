@@ -5,6 +5,7 @@ namespace App\Controller\Rest;
 use App\Entity\Game;
 use App\Entity\GameEvent;
 use App\Entity\GameStatistic;
+use App\Entity\Player;
 use App\Form\GameStatisticType;
 use App\Form\GameType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,10 +40,11 @@ class RestController extends AbstractFOSRestController implements ClassResourceI
         $teamName = $data[0]['teamName'];
         $gameDate = date_create_from_format('d-M-Y H:i', $data[0]['gameDate']);
         $gameCoach = $data[0]['teamCoach'];
-        $repository = $this->entityManager->getRepository(Game::class);
+        $repository_game = $this->entityManager->getRepository(Game::class);
         $repository_event = $this->entityManager->getRepository(GameEvent::class);
+        $repository_player = $this->entityManager->getRepository(Player::class);
 
-        if ($repository->findOneBy(['gameDate' => $gameDate, 'teamName' => $teamName ]) == null){
+        if ($repository_game->findOneBy(['gameDate' => $gameDate, 'teamName' => $teamName ]) == null){
             $game = new Game ;
             $form_game = $this->createForm(GameType::class, $game);
             $form_game->submit($data);
@@ -56,14 +58,28 @@ class RestController extends AbstractFOSRestController implements ClassResourceI
 
             foreach ($data as $object) {
                 $gameStatistics = new GameStatistic();
-                $gameStatistics->setPlayerName($object['playerName']);
                 $event = $repository_event->findOneBy(['name' => $object['eventName']]);
-                $gameStatistics->setGameEvent($event);
-                $gameStatistics->setGame($game);
-                $statistics [] = [$object['playerName'], $event->getName(), $event->getScore()];
-                $this->entityManager->persist($gameStatistics);
+                $player = $repository_player->findOneBy(['name' => $object['playerName']]);
+                if($player == null ){
+                    $new_player = new Player();
+                    $new_player->setName($object['playerName']);
+                    $this->entityManager->persist($new_player);
+                    $gameStatistics->setPlayer($new_player);
+                    $gameStatistics->setGameEvent($event);
+                    $gameStatistics->setGame($game);
+                    $statistics [] = [$new_player->getName(), $event->getName(), $event->getScore()];
+                    $this->entityManager->persist($gameStatistics);
+                    $this->entityManager->flush();
+                } else {
+                    $gameStatistics->setPlayer($player);
+                    $gameStatistics->setGameEvent($event);
+                    $gameStatistics->setGame($game);
+                    $statistics [] = [$player->getName(), $event->getName(), $event->getScore()];
+                    $this->entityManager->persist($gameStatistics);
+                    $this->entityManager->flush();
+                }
             }
-            $this->entityManager->flush();
+
             return $this->handleView($this->view([$game_info,$statistics],Response::HTTP_OK));
         } else
             return $this->handleView($this->view(null,Response::HTTP_NO_CONTENT));

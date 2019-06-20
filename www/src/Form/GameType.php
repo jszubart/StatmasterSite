@@ -15,10 +15,13 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('teamName')
-            ->add('gameCoach' ,TextType::class ,[
+            ->add('teamName', TextType::class, array(
+                'attr' => array('style' => 'width: 250px')
+            ))
+            ->add('gameCoach' ,TextType::class ,array(
+                'attr' => array('style' => 'width: 250px'),
                 'label' => 'Coach'
-            ])
+            ))
         ;
     }
 

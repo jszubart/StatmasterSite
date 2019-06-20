@@ -3,7 +3,7 @@
 {% block title %}Game Statistic{% endblock %}
 
 {% block body %}
-    <h2>{{ game_statistic.id }}. "{{ game_statistic.gameEvent.name }}" by  {{ game_statistic.playerName }}</h2>
+    <h2>{{ game_statistic.id }}. "{{ game_statistic.gameEvent.name }}" by  {{ game_statistic.player.name }}</h2>
 
     <table class="table">
         <tbody>
@@ -13,7 +13,11 @@
             </tr>
             <tr>
                 <th>PlayerName</th>
-                <td>{{ game_statistic.playerName }}</td>
+                <td>
+                    <a class="link" href="{{ path('player_show',{'id': game_statistic.player.id }) }}">
+                        {{ game_statistic.player.name }}
+                    </a>
+                </td>
             </tr>
             <tr>
                 <th>EventName</th>
