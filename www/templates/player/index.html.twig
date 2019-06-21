@@ -1,26 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Player index{% endblock %}
+{% block title %}Players{% endblock %}
 
 {% block body %}
-    <h1>Player index</h1>
+    <h2 class="headers">Players list</h2>
 
-    <table class="table">
-        <thead>
+    <table class="table table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for player in players %}
-            <tr>
+            <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('player_show', {'id': player.id}) }}">
                 <td>{{ player.id }}</td>
-                <td>{{ player.name }}</td>
+                <th>{{ player.name }}</th>
                 <td>
-                    <a href="{{ path('player_show', {'id': player.id}) }}">show</a>
-                    <a href="{{ path('player_edit', {'id': player.id}) }}">edit</a>
+                    <a href="{{ path('player_edit', {'id': player.id}) }}">
+                        <button class="btn btn-dark btn-sm">Edit</button>
+                    </a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +32,15 @@
         </tbody>
     </table>
 
-    <a href="{{ path('player_new') }}">Create new</a>
+    <a href="{{ path('player_new') }}">
+        <button class="btn btn-dark">Create new player</button>
+    </a>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
 {% endblock %}

@@ -69,7 +69,7 @@ class PlayerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('player_index', [
+            return $this->redirectToRoute('player_show', [
                 'id' => $player->getId(),
             ]);
         }

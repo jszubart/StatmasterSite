@@ -12,7 +12,7 @@
             <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
         </a>
     </div>
-    <table class="table table-striped">
+    <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
             <th>Player</th>
@@ -25,7 +25,7 @@
         <tbody>
 
             {% for game_statistic in game.statistics %}
-                <tr>
+                <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_statistic_show', {'id': game_statistic.id}) }}">
                     <th>
                         <a class="link" href="{{ path('player_show',{'id': game_statistic.player.id }) }}">
                             {{ game_statistic.player.name }}
@@ -39,17 +39,7 @@
                     <th>{{ game_statistic.gameEvent.type }}</th>
                     <td>{{ game_statistic.gameEvent.score}}</td>
                     <td>
-                        <div>
-                            <div class="buttons">
-                                <a href="{{ path('game_statistic_show', {'id': game_statistic.id}) }}">
-                                    <button class="btn btn-primary btn-sm">Show</button>
-                                </a>
-                            </div>
-                            <div>
-                                {{ include('game_statistic/_delete_form.html.twig') }}
-                            </div>
-                        </div>
-
+                        {{ include('game_statistic/_delete_form.html.twig') }}
                     </td>
             </tr>
             {% else %}
@@ -74,5 +64,13 @@
             </a>
         </div>
     </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
 {% endblock %}
 

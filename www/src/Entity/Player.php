@@ -89,9 +89,36 @@ class Player
            $id = $statistic->getGame()->getId();
             if(!in_array($id,$ids)){
                 $ids[]= $id;
-                $games [] = $statistic->getGame();
+                $games[] = $statistic->getGame();
             }
         }
         return $games;
     }
+
+    public function getSummaryScore(string $type)
+    {
+        $statistics = $this->statistic;
+        $score = 0;
+        foreach ($statistics as $statistic) {
+            if($statistic->getGameEvent()->getType() == $type) {
+                $score += $statistic->getGameEvent()->getScore();
+            }
+            if($type == 'Summary'){
+                $score += $statistic->getGameEvent()->getScore();
+            }
+        }
+        return $score;
+    }
+
+    public function getSpecificStatistics(string $type){
+        $statistics = $this->statistic;
+        $statistics_of_type = array();
+        foreach ($statistics as $statistic){
+            if($statistic->getGameEvent()->getType() == $type){
+                $statistics_of_type [] = $statistic;
+            }
+        }
+        return $statistics_of_type;
+    }
+
 }

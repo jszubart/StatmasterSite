@@ -16,10 +16,14 @@ class GameType extends AbstractType
     {
         $builder
             ->add('teamName', TextType::class, array(
-                'attr' => array('style' => 'width: 250px')
+                'attr' => array(
+                    'style' => 'width: 250px',
+                    'placeholder' => 'Team name')
             ))
             ->add('gameCoach' ,TextType::class ,array(
-                'attr' => array('style' => 'width: 250px'),
+                'attr' => array(
+                    'style' => 'width: 250px',
+                    'placeholder' => 'Coach'),
                 'label' => 'Coach'
             ))
         ;

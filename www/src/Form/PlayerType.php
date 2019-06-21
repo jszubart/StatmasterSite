@@ -14,7 +14,10 @@ class PlayerType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
-                'attr' => array('style' => 'width: 250px')
+                'label' => 'Player name',
+                'attr' => array(
+                    'style' => 'width: 250px',
+                    'placeholder' => 'Player name')
             ))
         ;
     }

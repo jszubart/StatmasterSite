@@ -3,7 +3,7 @@
 {% block title %}Edit Game {{ game.id }} Information{% endblock %}
 
 {% block body %}
-    <h2>Edit {{ game.teamName }} game </h2>
+    <h2>Edit: {{ game.teamName }} game </h2>
     <h3>Date: {{ game.gameDate|date('Y-m-d H:i') }}</h3>
 
 <p>{{ include('game/_form.html.twig', {'button_label': 'Update'}) }}</p>

@@ -78,6 +78,8 @@ body {
 .link{
     text-decoration: none;
     color: black;
-    font-weight: normal;
-
+    font-weight: bold;
+}
+.headers{
+    font-weight:normal
 }

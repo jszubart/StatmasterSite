@@ -76,9 +76,12 @@ class GameStatisticController extends AbstractController
     public function edit(Request $request, GameStatistic $gameStatistic): Response
     {
         $form = $this->createForm(GameStatisticType::class, $gameStatistic);
+        $player_id = $request->get('id');
+        $player = $this->gameRepository->find($player_id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $gameStatistic->setPlayer($player);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('game_statistic_index', [
