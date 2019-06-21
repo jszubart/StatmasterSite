@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +36,11 @@ class GameEvent
      * @ORM\OneToMany(targetEntity="App\Entity\GameStatistic", mappedBy="gameEvent")
      */
     private $gameStatistic;
+
+    public function __construct()
+    {
+        $this->gameStatistic = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,17 +83,58 @@ class GameEvent
         return $this;
     }
 
-    public function getGameStatistic(): ?GameStatistic
+    /**
+     * @return mixed
+     */
+    public function getGameStatistic()
     {
         return $this->gameStatistic;
     }
 
-    public function setGameStatistic(?GameStatistic $gameStatistic): self
+    /**
+     * @param mixed $gameStatistic
+     */
+    public function setGameStatistic($gameStatistic): void
     {
         $this->gameStatistic = $gameStatistic;
-
-        return $this;
     }
 
+    public function getImage(string $type){
+        $attack_img = 'assets/uploads/attack.png';
+        $defence_img = 'assets/uploads/defence.png';
+        if($type == 'Attack'){
+            return $attack_img;
+        } else
+            return $defence_img;
+    }
+
+    public function getPlayers(){
+        $gameStatistics = $this->gameStatistic;
+        $players = array();
+        $ids = array();
+        foreach($gameStatistics as $statistic){
+            $id = $statistic->getPlayer()->getId();
+            if(!in_array($id,$ids)) {
+                $ids[]= $id;
+                $players[]=$statistic->getPlayer();
+            }
+        }
+        return $players;
+    }
+
+    public function getGames()
+    {
+        $gameStatistics = $this->gameStatistic;
+        $games = array();
+        $ids = array();
+        foreach ($gameStatistics as $statistic) {
+            $id = $statistic->getGame()->getId();
+            if (!in_array($id, $ids)) {
+                $ids[] = $id;
+                $games[] = $statistic->getGame();
+            }
+        }
+        return $games;
+    }
 
 }

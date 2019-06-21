@@ -118,4 +118,15 @@ class Game
         }
         return $summary;
     }
+    public function getEventCount(string $event_name)
+    {
+        $statistics = $this->statistics;
+        $counter = 0;
+        foreach ($statistics as $statistic) {
+            if ($statistic->getGameEvent()->getName() == $event_name) {
+                $counter += 1;
+            }
+        }
+        return $counter;
+    }
 }

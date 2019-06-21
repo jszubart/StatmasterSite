@@ -9,6 +9,7 @@
             <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
             <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.tablesorter.min.js') }}"></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
         {% endblock %}
@@ -41,7 +42,6 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ path('game_statistic_index') }}">Statistics index </a>
                         <a class="dropdown-item" href="{{ path('game_event_index') }}">Simple statistics ranking </a>
-                        <a class="dropdown-item" href="#">Advanced statistics ranking </a>
                     </div>
                 </li>
                 {% if is_granted('ROLE_USER') %}

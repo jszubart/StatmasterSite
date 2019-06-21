@@ -96,6 +96,4 @@ class GameStatistic
     {
         $this->player = $player;
     }
-
-
 }

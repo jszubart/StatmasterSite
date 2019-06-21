@@ -47,4 +47,14 @@ class GameEventController extends AbstractController
 
         return $this->redirectToRoute('game_event_index');
     }
+
+    /**
+     * @Route("/{id}/ranking", name="game_event_ranking", methods={"GET"})
+     */
+    public function ranking(Request $request, GameEvent $gameEvent): Response
+    {
+        return $this->render('game_event/ranking.html.twig', [
+            'game_event' => $gameEvent,
+        ]);
+    }
 }

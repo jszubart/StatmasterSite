@@ -121,4 +121,15 @@ class Player
         return $statistics_of_type;
     }
 
+    public function getEventCount(string $event){
+        $statistics = $this->statistic;
+        $count = 0;
+        foreach ($statistics as $statistic) {
+            if($statistic->getGameEvent()->getName() == $event){
+                $count += 1;
+            }
+        }
+        return $count;
+    }
+
 }
