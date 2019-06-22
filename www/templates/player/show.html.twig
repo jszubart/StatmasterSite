@@ -16,7 +16,7 @@
     {% if player.getGames %}
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-games" role="tabpanel" aria-labelledby="nav-home-tab">
-            <table class="table table-hover mt-4">
+            <table id="games-table" class="tablesorter-bootstrap table-bordered table-hover mt-4" style="width: 80%; margin: auto">
                 <thead class="thead-light">
                 <tr>
                     <th>Game Id</th>
@@ -39,7 +39,7 @@
         </div>
         <div class="tab-pane fade" id="nav-summary" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="tab-pane fade show active" id="nav-games" role="tabpanel" aria-labelledby="nav-home-tab">
-                <table class="table table-hover mt-4">
+                <table id="statistic_table" class="tablesorter-bootstrap table-bordered table-hover mt-4" style="width: 80%; margin: auto">
                     <thead class="thead-light">
                     <tr>
                         <th>Game Id</th>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="nav-average" role="tabpanel" aria-labelledby="nav-contact-tab">
-            <table class="table table-striped mt-4">
+            <table id="averages-table" class="tablesorter-bootstrap table-bordered table-hover mt-4" style="width: 80%; margin: auto">
                 <thead class="thead-light">
                 <tr>
                     <th>Type</th>
@@ -106,25 +106,42 @@
     {% else %}
         <h3 class="margins"> No statistics found for this player</h3>
     {% endif %}
+    {%  if is_granted('ROLE_USER') %}
+        <div class="margins">
+            <a href="{{ path('player_edit', {'id': player.id}) }}">
+                <button class="btn btn-dark">Edit player</button>
+            </a>
+        </div>
 
-    <div class="margins">
-        <a href="{{ path('player_edit', {'id': player.id}) }}">
-            <button class="btn btn-dark">Edit player</button>
-        </a>
-    </div>
+        {{ include('player/_delete_form.html.twig') }}
+    {% endif %}
 
-    {{ include('player/_delete_form.html.twig') }}
+        <div class="margins">
+            <a href="{{ path('player_index') }}">
+                <button class="btn btn-primary">Back to list</button>
+            </a>
+        </div>
 
-    <div class="margins">
-        <a href="{{ path('player_index') }}">
-            <button class="btn btn-primary">Back</button>
-        </a>
-    </div>
 
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
+            });
+        });
+        $(function() {
+            $("#games-table").tablesorter({
+                sortList: [[0,0]]
+            });
+        });
+        $(function() {
+            $("#statistic_table").tablesorter({
+                sortList: [[0,0]]
+            });
+        });
+        $(function() {
+            $("#averages-table").tablesorter({
+                sortList: [[4,1]]
             });
         });
     </script>

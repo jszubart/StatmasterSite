@@ -30,7 +30,7 @@
                 <th>{{ game_statistic.game.gameDate|date('Y-m-d') }}</th>
                 <td>{{ game_statistic.game.gameCoach}}</td>
                 <th>
-                    <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">
+                    <a class="link" href="{{ path('game_event_ranking',{'id': game_statistic.gameEvent.id }) }}">
                         {{ game_statistic.gameEvent.name }}
                     </a>
                 </th>

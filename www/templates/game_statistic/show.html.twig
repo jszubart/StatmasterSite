@@ -1,54 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Game Statistic{% endblock %}
+{% block title %}Statistic details{% endblock %}
 
 {% block body %}
-    <h2>{{ game_statistic.id }}. "{{ game_statistic.gameEvent.name }}" by  {{ game_statistic.player.name }}</h2>
+    <div class="margins">
+        <h3>Statistic details</h3>
+    </div>
 
-    <table class="table">
+    <table class="table table-bordered ">
+        <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>Player</th>
+            <th>Event</th>
+            <th>Score</th>
+            <th>Game date</th>
+            <th>Team</th>
+            <th>Coach</th>
+        </tr>
+        </thead>
         <tbody>
             <tr>
-                <th>Id</th>
                 <td>{{ game_statistic.id }}</td>
-            </tr>
-            <tr>
-                <th>PlayerName</th>
                 <td>
                     <a class="link" href="{{ path('player_show',{'id': game_statistic.player.id }) }}">
                         {{ game_statistic.player.name }}
                     </a>
                 </td>
-            </tr>
-            <tr>
-                <th>EventName</th>
-                <td>{{ game_statistic.gameEvent.name }}</td>
-            </tr>
-            <tr>
-                <th>Score</th>
+                <td>
+                    <a class="link" href="{{ path('game_event_ranking',{'id': game_statistic.gameEvent.id }) }}">
+                        {{ game_statistic.gameEvent.name }}
+                    </a>
+                </td>
                 <td>{{ game_statistic.gameEvent.score }}</td>
-            </tr>
-            <tr>
-                <th>Team</th>
-                <td>{{ game_statistic.game.teamName|capitalize }}</td>
-            </tr>
-            <tr>
-                <th>Coach</th>
-                <td>{{ game_statistic.game.gameCoach }}</td>
+                <th>{{ game_statistic.game.gameDate|date('Y-m-d') }}</th>
+                <td>{{ game_statistic.game.teamName }}</td>
+                <th>{{ game_statistic.game.gameCoach }}</th>
             </tr>
         </tbody>
     </table>
-  <div>
-      <div>
-          <a href="{{ path('game_statistic_edit', {'id': game_statistic.id}) }}">
-              <button class="btn btn-dark">Edit</button>
-          </a>
-      </div>
+    <div>
+      {%  if is_granted('ROLE_USER') %}
+          <div>
+              <a href="{{ path('game_show', {'id': game_statistic.game.id}) }}">
+                  <button class="btn btn-info">Go to game</button>
+              </a>
+              <a href="{{ path('game_statistic_edit', {'id': game_statistic.id}) }}">
+                  <button class="btn btn-dark">Edit</button>
+              </a>
+          </div>
+      {% endif %}
       <div class="mt-2">
           <a href="{{ path('game_statistic_index') }}">
               <button class="btn btn-primary">Back</button>
           </a>
       </div>
-  </div>
+    </div>
 
 
 {% endblock %}

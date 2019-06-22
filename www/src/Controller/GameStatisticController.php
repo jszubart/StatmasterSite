@@ -39,6 +39,8 @@ class GameStatisticController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $gameStatistic = new GameStatistic();
         $form = $this->createForm(GameStatisticType::class, $gameStatistic);
         $form->handleRequest($request);
@@ -75,6 +77,7 @@ class GameStatisticController extends AbstractController
      */
     public function edit(Request $request, GameStatistic $gameStatistic): Response
     {
+
         $form = $this->createForm(GameStatisticType::class, $gameStatistic);
         $player_id = $request->get('id');
         $player = $this->gameRepository->find($player_id);
@@ -84,7 +87,7 @@ class GameStatisticController extends AbstractController
             $gameStatistic->setPlayer($player);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('game_statistic_index', [
+            return $this->redirectToRoute('game_statistic_show', [
                 'id' => $gameStatistic->getId(),
             ]);
         }
@@ -100,6 +103,8 @@ class GameStatisticController extends AbstractController
      */
     public function delete(Request $request, GameStatistic $gameStatistic): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $game_id =$request->request->get('game');
         if ($this->isCsrfTokenValid('delete'.$gameStatistic->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

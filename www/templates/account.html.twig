@@ -3,17 +3,9 @@
 {% block title %}Account{% endblock %}
 
 {% block body %}
-    <div class="sidebar" >
-        <ul class="nav navbar-nav ">
-            <li><a href="{{ path('account') }}">Account</a></li>
-            <li><a href="{{ path('app_logout') }}">Logout</a></li>
-        </ul>
-    </div>
     <h3>Your profile</h3>
-    <h5>Username</h5>
-   <p>{{ app.user.username }}</p>
     <h5>Email</h5>
-   <p> {{ app.user.email }}</p>
+    <p> {{ app.user.email }}</p>
     <h5>Change password</h5>
     {{ form_start(form) }}
     <div class="container text-center">
@@ -45,6 +37,9 @@
             <div class = "row justify-content-center">
                 {{ form_widget(form.plainPassword.second) }}
             </div>
+        </div>
+        <div class = "row justify-content-center">
+            {{ form_row(form.submit) }}
         </div>
     </div>
     {{ form_end(form) }}

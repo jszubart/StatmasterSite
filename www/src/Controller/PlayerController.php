@@ -30,6 +30,8 @@ class PlayerController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $player = new Player();
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
@@ -63,6 +65,8 @@ class PlayerController extends AbstractController
      */
     public function edit(Request $request, Player $player): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
@@ -85,6 +89,8 @@ class PlayerController extends AbstractController
      */
     public function delete(Request $request, Player $player): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->isCsrfTokenValid('delete'.$player->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($player);

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/game/event")
+ * @Route("/game_events")
  */
 class GameEventController extends AbstractController
 {
@@ -21,16 +21,6 @@ class GameEventController extends AbstractController
     {
         return $this->render('game_event/index.html.twig', [
             'game_events' => $gameEventRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="game_event_show", methods={"GET"})
-     */
-    public function show(GameEvent $gameEvent): Response
-    {
-        return $this->render('game_event/show.html.twig', [
-            'game_event' => $gameEvent,
         ]);
     }
 
