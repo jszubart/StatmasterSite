@@ -20,7 +20,7 @@
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-games" role="tabpanel" aria-labelledby="nav-home-tab">
-                <table id="ranking-table" class="tablesorter-bootstrap table-bordered mt-4" style="width: 80%; margin: auto">
+                <table id="ranking-table" class="tablesorter-bootstrap table-bordered mt-4 table-hover" style="width: 80%; margin: auto">
                     <thead class="thead-light">
                     <tr>
                         <th>Player name</th>
@@ -29,16 +29,20 @@
                     </thead>
                     <tbody>
                     {% for event in game_event.getPlayers   %}
-                    <tr>
-                        <td>{{ event.name }}</td>
-                        <th>{{ event.getEventCount(game_event.name) }}</th>
-                    </tr>
+                        <tr>
+                            <td>{{ event.name }}</td>
+                            <th>{{ event.getEventCount(game_event.name) }}</th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">No players found</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
         <div class="tab-pane fade" id="nav-summary" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <table id="event-table" class="tablesorter-bootstrap table-bordered mt-4" style="width: 80%; margin: auto">
+            <table id="event-table" class="tablesorter-bootstrap table-bordered mt-4 table-hover" style="width: 80%; margin: auto">
                 <thead class="thead-light">
                 <tr>
                     <th>Game Id</th>
@@ -54,6 +58,10 @@
                         <th>{{ game.teamName }}</th>
                         <td>{{ game.gameDate|date('Y-m-d') }}</td>
                         <th>{{ game.getEventCount(game_event.name) }}</th>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No statistics found</td>
                     </tr>
                 {% endfor %}
                 </tbody>

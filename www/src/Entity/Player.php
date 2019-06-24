@@ -28,6 +28,11 @@ class Player
      */
     private $statistic;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="players")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->statistic = new ArrayCollection();
@@ -131,5 +136,22 @@ class Player
         }
         return $count;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
 
 }

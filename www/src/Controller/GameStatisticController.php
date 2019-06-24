@@ -18,12 +18,10 @@ class GameStatisticController extends AbstractController
 {
 
     private $gameRepository;
-    private $gameStatisticRepository;
 
-    public function __construct(GameRepository $gameRepository, GameStatisticRepository $gameStatisticRepository)
+    public function __construct(GameRepository $gameRepository)
     {
         $this->gameRepository = $gameRepository;
-        $this->gameStatisticRepository = $gameStatisticRepository;
     }
 
     /**
@@ -41,13 +39,14 @@ class GameStatisticController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
         $gameStatistic = new GameStatistic();
-        $form = $this->createForm(GameStatisticType::class, $gameStatistic);
-        $form->handleRequest($request);
         $game_id = $request->get('id');
         $game = $this->gameRepository->find($game_id);
+
+        $this->denyAccessUnlessGranted('edit', $game);
+
+        $form = $this->createForm(GameStatisticType::class, $gameStatistic);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $gameStatistic->setGame($game);
@@ -84,8 +83,7 @@ class GameStatisticController extends AbstractController
      */
     public function edit(Request $request, GameStatistic $gameStatistic): Response
     {
-
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $gameStatistic->getGame());
 
         $form = $this->createForm(GameStatisticType::class, $gameStatistic);
         $player = $gameStatistic->getPlayer();
@@ -116,7 +114,7 @@ class GameStatisticController extends AbstractController
      */
     public function delete(Request $request, GameStatistic $gameStatistic): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $gameStatistic->getGame());
 
         $game_id =$request->request->get('game');
         if ($this->isCsrfTokenValid('delete'.$gameStatistic->getId(), $request->request->get('_token'))) {

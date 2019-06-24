@@ -35,7 +35,7 @@ class AccountController extends AbstractController
                     $em->flush();
 
                     $this->addFlash(
-                        'notice',
+                        'info',
                         'Password changed successfully'
                     );
             }

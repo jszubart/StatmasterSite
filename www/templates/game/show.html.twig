@@ -10,7 +10,7 @@
     <div class="margins">
         <h4 class="font-weight-normal">Events score: {{ game.getSummaryScore }}</h4>
     </div>
-    {%  if is_granted('ROLE_USER') %}
+    {%  if is_granted('edit', game) %}
         <div class="margins">
             <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
                 <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
@@ -28,7 +28,6 @@
         </tr>
         </thead>
         <tbody>
-
             {% for game_statistic in game.statistics %}
                 <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_statistic_show', {'id': game_statistic.id}) }}">
                     <th>
@@ -44,20 +43,20 @@
                     <th>{{ game_statistic.gameEvent.type }}</th>
                     <td>{{ game_statistic.gameEvent.score}}</td>
                     <td>
-                        {%  if is_granted('ROLE_USER') %}
+                        {%  if is_granted('edit', game) %}
                             {{ include('game_statistic/_delete_form.html.twig') }}
                         {% endif %}
                     </td>
             </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">No records found, if you want to create some record please click button "Create New Event"</td>
+                    <td colspan="5">No records found, if you want to add event please click button above <strong>"Create New Event"</strong></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    {%  if is_granted('ROLE_USER') %}
+    {%  if is_granted('edit', game) %}
         <div>
             <div class="mt-2">
                 <a href="{{ path('game_edit', {'id': game.id}) }}">
@@ -66,6 +65,13 @@
             </div>
         </div>
     {% endif %}
+
+    <div class="margins">
+        <a href="{{ path('game_index') }}">
+            <button type = "button" class = "btn btn-primary">Back</button>
+        </a>
+    </div>
+    </div>
 
     <script type="text/javascript">
         jQuery(document).ready(function($) {

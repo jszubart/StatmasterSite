@@ -19,7 +19,7 @@
                 <td>{{ player.id }}</td>
                 <th>{{ player.name }}</th>
                 <td>
-                    {% if is_granted('ROLE_USER') %}
+                    {%  if is_granted('edit', player) %}
                         <a href="{{ path('player_edit', {'id': player.id}) }}">
                             <button class="btn btn-dark btn-sm">Edit</button>
                         </a>
@@ -28,7 +28,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No players found</td>
             </tr>
         {% endfor %}
         </tbody>

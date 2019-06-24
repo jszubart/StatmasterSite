@@ -38,6 +38,11 @@ class Game
      */
     private $statistics;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="games")
+     */
+    private $user;
+
 
     public function __construct()
     {
@@ -129,4 +134,21 @@ class Game
         }
         return $counter;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
 }

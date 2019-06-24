@@ -37,6 +37,7 @@ class PlayerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $player->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($player);
             $entityManager->flush();
@@ -70,7 +71,7 @@ class PlayerController extends AbstractController
      */
     public function edit(Request $request, Player $player): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $player);
 
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
@@ -80,7 +81,7 @@ class PlayerController extends AbstractController
 
             $this->addFlash(
                 'info',
-                'Player '. $player->getName() .' has been edited!'
+                'Player '. $player->getName() .' has been successfully edited!'
             );
 
             return $this->redirectToRoute('player_show', [
@@ -99,7 +100,7 @@ class PlayerController extends AbstractController
      */
     public function delete(Request $request, Player $player): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $player);
 
         if ($this->isCsrfTokenValid('delete'.$player->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

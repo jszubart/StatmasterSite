@@ -44,7 +44,7 @@
           <a href="{{ path('game_show', {'id': game_statistic.game.id}) }}">
               <button class="btn btn-info">Go to game</button>
           </a>
-          {%  if is_granted('ROLE_USER') %}
+          {%  if is_granted('edit', game_statistic.game) %}
               <a href="{{ path('game_statistic_edit', {'id': game_statistic.id}) }}">
                   <button class="btn btn-dark">Edit</button>
               </a>

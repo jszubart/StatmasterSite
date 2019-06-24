@@ -38,6 +38,7 @@ class GameController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $game->setUser($this->getUser());
             $game->setGameDate(new \DateTime());
             $entityManager->persist($game);
             $entityManager->flush();
@@ -71,7 +72,7 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $game);
 
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
@@ -81,7 +82,7 @@ class GameController extends AbstractController
 
             $this->addFlash(
                 'info',
-                'Game '. $game->getId(). ' has been edited!'
+                'Game '. $game->getId(). ' details have been edited!'
             );
 
             return $this->redirectToRoute('game_index', [
@@ -100,7 +101,7 @@ class GameController extends AbstractController
      */
     public function delete(Request $request, Game $game): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $game);
 
         if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -108,7 +109,7 @@ class GameController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash(
-                'warning',
+                'danger',
                 'Game '. $game->getId(). ' has been deleted!'
             );
 
