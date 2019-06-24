@@ -1,0 +1,27 @@
+doctrine:
+    dbal:
+        dbname: statmaster
+        host: localhost
+        port: 3306
+        user: root
+        password: root
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8
+        default_table_options:
+            charset: utf8
+            collate: utf8_unicode_ci
+            row_format: DYNAMIC
+
+        url: mysql://root:root@localhost:3306/statmaster
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App

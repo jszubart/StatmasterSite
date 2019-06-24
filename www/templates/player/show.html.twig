@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Player profile{% endblock %}
+
+{% block body %}
+    <div class="mt-3 mb-2">
+        <h2>{{ player.name }}</h2>
+    </div>
+    <nav>
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-games" role="tab" aria-controls="nav-home" aria-selected="true">Games</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-summary" role="tab" aria-controls="nav-profile" aria-selected="false">Statistics summary</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-average" role="tab" aria-controls="nav-contact" aria-selected="false">Average Statistics</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-games" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table id="games-table" class="tablesorter-bootstrap table-bordered table-hover mt-4" style="width: 80%; margin: auto">
+                <thead class="thead-light">
+                <tr>
+                    <th>Game Id</th>
+                    <th>Team</th>
+                    <th>Coach</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for game in player.getGames %}
+                        <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_show', {'id': game.id}) }}">
+                            <th>{{ game.id }}</th>
+                            <td>{{ game.teamName }}</td>
+                            <th>{{ game.gameCoach }}</th>
+                            <td>{{ game.gameDate|date('Y-m-d') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No games found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="nav-summary" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="tab-pane fade show active" id="nav-games" role="tabpanel" aria-labelledby="nav-home-tab">
+                <table id="statistic_table" class="tablesorter-bootstrap table-bordered table-hover mt-4" style="width: 80%; margin: auto">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Game Id</th>
+                        <th>Date</th>
+                        <th>Event name</th>
+                        <th>Event type</th>
+                        <th>Event score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for statistic in player.statistic %}
+                        <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_statistic_show', {'id': statistic.id}) }}">
+                            <th>{{ statistic.game.id }}</th>
+                            <td>{{ statistic.game.gameDate|date('Y-m-d') }}</td>
+                            <th>{{ statistic.gameEvent.name }}</th>
+                            <td>{{ statistic.gameEvent.type }}</td>
+                            <th>{{ statistic.gameEvent.score }}</th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No statistics found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="margins" >
+                    <h4>Summary score: {{ player.getSummaryScore('Summary') }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-average" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <table id="averages-table" class="tablesorter-bootstrap table-bordered table-hover mt-4" style="width: 80%; margin: auto">
+                <thead class="thead-light">
+                <tr>
+                    <th>Type</th>
+                    <th>Events</th>
+                    <th>Summary score</th>
+                    <th>Number of games</th>
+                    <th>Average score per game</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if player.getGames %}
+                    <tr>
+                        <th>Attack + Defence</th>
+                        <td>{{ player.getStatistic|length }}</td>
+                        <th>{{ player.getSummaryScore('Summary') }}</th>
+                        <td>{{ player.getGames|length }}</td>
+                        <th>{{ player.getSummaryScore('Summary') // player.getGames|length }}</th>
+                    </tr>
+                    <tr>
+                        <th>Attack</th>
+                        <td>{{ player.getSpecificStatistics('Attack')|length }}</td>
+                        <th>{{ player.getSummaryScore('Attack')}}</th>
+                        <td>{{ player.getGames|length }}</td>
+                        <th>{{ player.getSummaryScore('Attack') // player.getGames|length }}</th>
+                    </tr>
+                    <tr>
+                        <th>Defence</th>
+                        <td>{{ player.getSpecificStatistics('Defence')|length }}</td>
+                        <th>{{ player.getSummaryScore('Defence') }}</th>
+                        <td>{{ player.getGames|length }}</td>
+                        <th>{{ player.getSummaryScore('Defence') // player.getGames|length }}</th>
+                    </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No statistics found</td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {%  if is_granted('edit', player) %}
+        <div class="margins">
+            <a href="{{ path('player_edit', {'id': player.id}) }}">
+                <button class="btn btn-dark">Edit player</button>
+            </a>
+        </div>
+
+        {{ include('player/_delete_form.html.twig') }}
+    {% endif %}
+
+        <div class="margins">
+            <a href="{{ path('player_index') }}">
+                <button class="btn btn-primary">Back to list</button>
+            </a>
+        </div>
+
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+        $(function() {
+            $("#games-table").tablesorter({
+                sortList: [[0,0]]
+            });
+        });
+        $(function() {
+            $("#statistic_table").tablesorter({
+                sortList: [[0,0]]
+            });
+        });
+        $(function() {
+            $("#averages-table").tablesorter({
+                sortList: [[4,1]]
+            });
+        });
+    </script>
+{% endblock %}

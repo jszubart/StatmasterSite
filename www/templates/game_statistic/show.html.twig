@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistic details{% endblock %}
+
+{% block body %}
+    <div class="margins">
+        <h3>Statistic details</h3>
+    </div>
+
+    <table class="table table-bordered ">
+        <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>Player</th>
+            <th>Event</th>
+            <th>Score</th>
+            <th>Game date</th>
+            <th>Team</th>
+            <th>Coach</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ game_statistic.id }}</td>
+                <td>
+                    <a class="link" href="{{ path('player_show',{'id': game_statistic.player.id }) }}">
+                        {{ game_statistic.player.name }}
+                    </a>
+                </td>
+                <td>
+                    <a class="link" href="{{ path('game_event_ranking',{'id': game_statistic.gameEvent.id }) }}">
+                        {{ game_statistic.gameEvent.name }}
+                    </a>
+                </td>
+                <td>{{ game_statistic.gameEvent.score }}</td>
+                <th>{{ game_statistic.game.gameDate|date('Y-m-d') }}</th>
+                <td>{{ game_statistic.game.teamName }}</td>
+                <th>{{ game_statistic.game.gameCoach }}</th>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+      <div>
+          <a href="{{ path('game_show', {'id': game_statistic.game.id}) }}">
+              <button class="btn btn-info">Go to game</button>
+          </a>
+          {%  if is_granted('edit', game_statistic.game) %}
+              <a href="{{ path('game_statistic_edit', {'id': game_statistic.id}) }}">
+                  <button class="btn btn-dark">Edit</button>
+              </a>
+          {% endif %}
+      </div>
+      <div class="mt-2">
+          <a href="{{ path('game_statistic_index') }}">
+              <button class="btn btn-primary">Back</button>
+          </a>
+      </div>
+    </div>
+
+
+{% endblock %}

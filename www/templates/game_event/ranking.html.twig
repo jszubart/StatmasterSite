@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ game_event.name }} Ranking{% endblock %}
+
+{% block body %}
+
+    <div class="margins">
+        <h3 class="font-weight-normal">
+            <img src="{{ asset(game_event.getImage(game_event.type)) }}" alt="" height="100px" width="75px" style="margin-right:15px "/>
+            {{ game_event.name }}
+        </h3>
+        <h5>Type: {{ game_event.type }}</h5>
+        <h5 class="font-weight-normal">Score: {{ game_event.score }}</h5>
+    </div>
+        <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-games" role="tab" aria-controls="nav-home" aria-selected="true">Best players</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-summary" role="tab" aria-controls="nav-profile" aria-selected="false">Event statistic</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-games" role="tabpanel" aria-labelledby="nav-home-tab">
+                <table id="ranking-table" class="tablesorter-bootstrap table-bordered mt-4 table-hover" style="width: 80%; margin: auto">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Player name</th>
+                        <th>Event count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for event in game_event.getPlayers   %}
+                        <tr>
+                            <td>{{ event.name }}</td>
+                            <th>{{ event.getEventCount(game_event.name) }}</th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">No players found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        <div class="tab-pane fade" id="nav-summary" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <table id="event-table" class="tablesorter-bootstrap table-bordered mt-4 table-hover" style="width: 80%; margin: auto">
+                <thead class="thead-light">
+                <tr>
+                    <th>Game Id</th>
+                    <th>Team</th>
+                    <th>Game Date</th>
+                    <th>Events in game</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for game in game_event.getGames   %}
+                    <tr>
+                        <td>{{ game.Id }}</td>
+                        <th>{{ game.teamName }}</th>
+                        <td>{{ game.gameDate|date('Y-m-d') }}</td>
+                        <th>{{ game.getEventCount(game_event.name) }}</th>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No statistics found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#ranking-table").tablesorter({
+                sortList: [ [1,1] ],
+            });
+        });
+        $(function() {
+            $("#event-table").tablesorter({
+                sortList: [[0,0]]
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Account{% endblock %}
+
+{% block body %}
+    <h3>Profile</h3>
+
+    <h5 class="font-weight-normal">Your games list</h5>
+    <div>
+        <table class="table table-hover" style="width: 60%; margin: auto">
+            <thead class="thead-light">
+            <tr>
+                <th>Team</th>
+                <th>Coach</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in app.user.games %}
+                <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_show', {'id': game.id}) }}">
+                    <th>{{ game.teamName }}</th>
+                    <td>{{ game.gameCoach }}</td>
+                    <td>{{ game.gameDate|date('Y-m-d H:i') }}</td>
+                    <td>
+                        {%  if is_granted('edit', game) %}
+                            <a href="{{ path('game_edit', {'id': game.id}) }}">
+                                <button type = "button" class = "btn btn-dark btn-sm">Edit</button>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No games added</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4 mb-5">
+        <h5 class="font-weight-normal">Your players list</h5>
+
+        <table class="table table-hover" style="width: 60%; margin: auto">
+            <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for player in app.user.players %}
+                <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('player_show', {'id': player.id}) }}">
+                    <th>{{ player.id }}</th>
+                    <td>{{ player.name }}</td>
+                    <td>
+                        {%  if is_granted('edit', player) %}
+                            <a href="{{ path('player_edit', {'id': player.id}) }}">
+                                <button class="btn btn-dark btn-sm">Edit</button>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No players added</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h2>Account information</h2>
+    <h5>Email</h5>
+    <p> {{ app.user.email }}</p>
+    <h5 class="mt-4">Change password</h5>
+    {{ form_start(form) }}
+    <div class="container text-center">
+        <div class="custom-error-class">
+            {{ form_errors(form.oldPassword) }}
+            {{ form_errors(form.plainPassword.first) }}
+            {{ form_errors(form.plainPassword.second) }}
+        </div>
+        <div class="col mx-auto">
+            <div class = "row justify-content-center">
+                {{ form_label(form.oldPassword) }}
+            </div>
+            <div class = "row justify-content-center">
+                {{ form_widget(form.oldPassword) }}
+            </div>
+        </div>
+        <div class="col mx-auto">
+            <div class = "row justify-content-center">
+                {{ form_label(form.plainPassword.first) }}
+            </div>
+            <div class = "row justify-content-center">
+                {{ form_widget(form.plainPassword.first) }}
+            </div>
+        </div>
+        <div class="col mx-auto">
+            <div class = "row justify-content-center">
+                {{ form_label(form.plainPassword.second) }}
+            </div>
+            <div class = "row justify-content-center">
+                {{ form_widget(form.plainPassword.second) }}
+            </div>
+        </div>
+        <div class = "row justify-content-center">
+            {{ form_row(form.submit) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+
+{% endblock %}

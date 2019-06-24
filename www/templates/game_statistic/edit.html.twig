@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block body %}
+    <h2>Edit: {{ game_statistic.id }}."{{ game_statistic.gameEvent.name }}" by  {{ game_statistic.player.name }}</h2>
+
+    <div class="mt-2 mb-2">
+        {{ form_start(form) }}
+        {{ form_errors(form.gameEvent) }}
+        <div class="container text-center">
+            <div class="col mx-auto">
+                <div class = "row justify-content-center">
+                    {{ form_label(form.gameEvent) }}
+                </div>
+                <div class = "row justify-content-center">
+                    {{ form_widget(form.gameEvent) }}
+                </div>
+            </div>
+        </div>
+
+        <a href="{{ path('game_statistic_edit',{'id': game_statistic.id}) }}" class="mb-2">
+            <button class="btn btn-dark mt-2">{{ button_label|default('Save') }}</button>
+        </a>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+
+    <a href="{{ path('game_statistic_index') }}">
+        <button class="btn btn-primary">Back</button>
+    </a>
+
+{% endblock %}

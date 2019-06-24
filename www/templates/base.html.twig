@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Statmaster{% endblock %} - Statmaster</title>
+        {% block stylesheets %}
+            <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('assets/css/themes/theme.bootstrap_4.css') }}" rel="stylesheet">
+            <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.tablesorter.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.tablesorter.widgets.js') }}"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+        {% endblock %}
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ path('homepage') }}">
+            <img src="{{ asset('assets/uploads/logo.png') }}" alt="" height="50px" width="200px">
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto mr-5">
+                {% if not is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Register</a>
+                    </li>
+                {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('game_index') }}">Games </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('player_index') }}">Players </a>
+                    </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Statistics
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('game_statistic_index') }}">Statistics index </a>
+                        <a class="dropdown-item" href="{{ path('game_event_index') }}">Simple statistics ranking </a>
+                    </div>
+                </li>
+                {% if is_granted('ROLE_USER') %}
+                <li class="nav-item dropdown mr-auto ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('account') }}">Account</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                </li>
+                {% endif  %}
+            </ul>
+        </div>
+    </nav>
+        <div class = "container-fluid text-center margins">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% block body %}{% endblock %}
+            {% block javascripts %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

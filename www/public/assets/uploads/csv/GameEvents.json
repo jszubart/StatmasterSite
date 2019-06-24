@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "name": "1X1 RZUT",
+    "type": "Defence",
+    "score": -1
+  },
+  {
+    "id": 2,
+    "name": "1X1 MINIĘCIE",
+    "type": "Defence",
+    "score": -2
+  },
+  {
+    "id": 3,
+    "name": "BRAK POWROTU",
+    "type": "Defence",
+    "score": -3
+  },
+  {
+    "id": 4,
+    "name": "ZBIÓRKA I WYRZUT",
+    "type": "Defence",
+    "score": 3
+  },
+  {
+    "id": 5,
+    "name": "BRAK ZBIÓRKI/ZASTAWIENIA",
+    "type": "Defence",
+    "score": -3
+  },
+  {
+    "id": 6,
+    "name": "ZASTAWIENIE",
+    "type": "Defence",
+    "score": 2
+  },
+  {
+    "id": 7,
+    "name": "1x1 WYBRONIONE",
+    "type": "Defence",
+    "score": 3
+  },
+  {
+    "id": 8,
+    "name": "1X1 RZUT CELNY",
+    "type": "Attack",
+    "score": 2
+  },
+  {
+    "id": 9,
+    "name": "1X1 RZUT PRÓBA",
+    "type": "Attack",
+    "score": 1
+  },
+  {
+    "id": 10,
+    "name": "1X1 MINIĘCIE",
+    "type": "Attack",
+    "score": 2
+  },
+  {
+    "id": 11,
+    "name": "1X1 MINIĘCIE PRÓBA",
+    "type": "Attack",
+    "score": 1
+  },
+  {
+    "id": 12,
+    "name": "ZBIÓRKA",
+    "type": "Attack",
+    "score": 2
+  },
+  {
+    "id": 13,
+    "name": "ZBIÓRKA PRÓBA",
+    "type": "Attack",
+    "score": 1
+  },
+  {
+    "id": 14,
+    "name": "ASYSTA",
+    "type": "Attack",
+    "score": 3
+  },
+  {
+    "id": 15,
+    "name": "ASYSTA PRÓBA",
+    "type": "Attack",
+    "score": 1
+  },
+  {
+    "id": 16,
+    "name": "KONTRA",
+    "type": "Attack",
+    "score": 2
+  },
+  {
+    "id": 17,
+    "name": "KONTRA PRÓBA",
+    "type": "Attack",
+    "score": 1
+  }
+]
