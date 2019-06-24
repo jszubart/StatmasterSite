@@ -18,10 +18,12 @@ class GameStatisticController extends AbstractController
 {
 
     private $gameRepository;
+    private $gameStatisticRepository;
 
-    public function __construct(GameRepository $gameRepository)
+    public function __construct(GameRepository $gameRepository, GameStatisticRepository $gameStatisticRepository)
     {
         $this->gameRepository = $gameRepository;
+        $this->gameStatisticRepository = $gameStatisticRepository;
     }
 
     /**
@@ -53,6 +55,11 @@ class GameStatisticController extends AbstractController
             $entityManager->persist($gameStatistic);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'New event '. $gameStatistic->getGameEvent()->getName() . ' of '. $gameStatistic->getGameEvent()->getType().' has been added!'
+            );
+
             return $this->redirectToRoute('game_show',['id' => $game_id]);
         }
 
@@ -78,14 +85,20 @@ class GameStatisticController extends AbstractController
     public function edit(Request $request, GameStatistic $gameStatistic): Response
     {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(GameStatisticType::class, $gameStatistic);
-        $player_id = $request->get('id');
-        $player = $this->gameRepository->find($player_id);
+        $player = $gameStatistic->getPlayer();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $gameStatistic->setPlayer($player);
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'info',
+                'Event has been edited!'
+            );
 
             return $this->redirectToRoute('game_statistic_show', [
                 'id' => $gameStatistic->getId(),
@@ -110,6 +123,11 @@ class GameStatisticController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($gameStatistic);
             $entityManager->flush();
+
+            $this->addFlash(
+                'danger',
+                'Event has been deleted!'
+            );
         }
 
         return $this->redirectToRoute('game_show',['id' => $game_id]);

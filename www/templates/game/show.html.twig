@@ -10,8 +10,8 @@
     <div class="margins">
         <h4 class="font-weight-normal">Events score: {{ game.getSummaryScore }}</h4>
     </div>
-    {%  if is_granted('isUser', game) %}
-        <div class="mt-2 mb-2">
+    {%  if is_granted('ROLE_USER') %}
+        <div class="margins">
             <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
                 <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
             </a>
@@ -61,7 +61,7 @@
         <div>
             <div class="mt-2">
                 <a href="{{ path('game_edit', {'id': game.id}) }}">
-                    <button type = "button" class = "btn btn-dark">Edit game details</button>
+                    <button type = "button" class = "btn btn-info">Edit game details</button>
                 </a>
             </div>
         </div>

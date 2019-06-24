@@ -25,20 +25,6 @@ class GameEventController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="game_event_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, GameEvent $gameEvent): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$gameEvent->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($gameEvent);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('game_event_index');
-    }
-
-    /**
      * @Route("/{id}/ranking", name="game_event_ranking", methods={"GET"})
      */
     public function ranking(Request $request, GameEvent $gameEvent): Response

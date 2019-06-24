@@ -40,16 +40,16 @@
         </tbody>
     </table>
     <div>
-      {%  if is_granted('ROLE_USER') %}
-          <div>
-              <a href="{{ path('game_show', {'id': game_statistic.game.id}) }}">
-                  <button class="btn btn-info">Go to game</button>
-              </a>
+      <div>
+          <a href="{{ path('game_show', {'id': game_statistic.game.id}) }}">
+              <button class="btn btn-info">Go to game</button>
+          </a>
+          {%  if is_granted('ROLE_USER') %}
               <a href="{{ path('game_statistic_edit', {'id': game_statistic.id}) }}">
                   <button class="btn btn-dark">Edit</button>
               </a>
-          </div>
-      {% endif %}
+          {% endif %}
+      </div>
       <div class="mt-2">
           <a href="{{ path('game_statistic_index') }}">
               <button class="btn btn-primary">Back</button>
