@@ -3,10 +3,10 @@
 {% block title %}Players{% endblock %}
 
 {% block body %}
-    <h2 class="headers">Players list</h2>
+    <h2>Players list</h2>
 
-    <table class="table table-hover">
-        <thead class="thead-dark">
+    <table class="table table-hover" style="width: 80%; margin: auto">
+        <thead class="thead-light">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -19,22 +19,27 @@
                 <td>{{ player.id }}</td>
                 <th>{{ player.name }}</th>
                 <td>
-                    <a href="{{ path('player_edit', {'id': player.id}) }}">
-                        <button class="btn btn-dark btn-sm">Edit</button>
-                    </a>
+                    {%  if is_granted('edit', player) %}
+                        <a href="{{ path('player_edit', {'id': player.id}) }}">
+                            <button class="btn btn-dark btn-sm">Edit</button>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No players found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('player_new') }}">
-        <button class="btn btn-dark">Create new player</button>
-    </a>
+    {% if is_granted('ROLE_USER') %}
+        <div class="margins">
+            <a href="{{ path('player_new') }}">
+                <button class="btn btn-dark">Create new player</button>
+            </a>
+        </div>
+    {% endif %}
 
     <script type="text/javascript">
         jQuery(document).ready(function($) {

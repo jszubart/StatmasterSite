@@ -16,6 +16,8 @@ class AccountController extends AbstractController
      */
     public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $changePasswordModel = new ChangePassword();
@@ -33,7 +35,7 @@ class AccountController extends AbstractController
                     $em->flush();
 
                     $this->addFlash(
-                        'notice',
+                        'info',
                         'Password changed successfully'
                     );
             }

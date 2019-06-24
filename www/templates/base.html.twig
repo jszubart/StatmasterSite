@@ -6,9 +6,12 @@
         {% block stylesheets %}
             <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
             <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('assets/css/themes/theme.bootstrap_4.css') }}" rel="stylesheet">
             <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
             <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.tablesorter.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.tablesorter.widgets.js') }}"></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
         {% endblock %}
@@ -27,21 +30,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_register') }}">Register</a>
                     </li>
+                {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('game_index') }}">Games </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('player_index') }}">Players </a>
                     </li>
-                {% endif %}
-                <li class="nav-item dropdown ml-3 ">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Statistics
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ path('game_statistic_index') }}">Statistics index </a>
                         <a class="dropdown-item" href="{{ path('game_event_index') }}">Simple statistics ranking </a>
-                        <a class="dropdown-item" href="#">Advanced statistics ranking </a>
                     </div>
                 </li>
                 {% if is_granted('ROLE_USER') %}
@@ -58,14 +60,17 @@
             </ul>
         </div>
     </nav>
-        <div class = "container-fluid text-center">
-{#            {% for label, messages in app.flashes %}#}
-{#                {% for message in messages %}#}
-{#                    <div class="alert alert-{{ label }}">#}
-{#                        {{ message }}#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            {% endfor %}#}
+        <div class = "container-fluid text-center margins">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
             {% block body %}{% endblock %}
             {% block javascripts %}
             {% endblock %}

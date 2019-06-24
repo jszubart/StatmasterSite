@@ -4,30 +4,22 @@
 
 {% block body %}
     <h2>Game events list</h2>
+    <h5 class="font-weight-normal">Select event to view ranking</h5>
 
-    <table class="table table-striped">
-        <thead class="thead-dark">
+    <table class="table table-hover" style="width: 80%; margin: auto">
+        <thead class="thead-light">
             <tr>
-                <th width="40%">Name</th>
+                <th style="width: 40%">Name</th>
                 <th>Type</th>
                 <th>Score</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for game_event in game_events %}
-            <tr>
+            <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_event_ranking',{'id': game_event.id}) }}">
                 <th>{{ game_event.name }}</th>
                 <td>{{ game_event.type }}</td>
                 <th>{{ game_event.score }}</th>
-                <td>
-                    <a href="{{ path('game_event_show', {'id': game_event.id}) }}">
-                        <button class=" btn btn-primary btn-sm">Show</button>
-                    </a>
-                    <a href="#">
-                        <button class=" btn btn-warning btn-sm">Ranking</button>
-                    </a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -36,4 +28,12 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
 {% endblock %}

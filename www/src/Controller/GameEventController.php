@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/game/event")
+ * @Route("/game_events")
  */
 class GameEventController extends AbstractController
 {
@@ -25,26 +25,12 @@ class GameEventController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="game_event_show", methods={"GET"})
+     * @Route("/{id}/ranking", name="game_event_ranking", methods={"GET"})
      */
-    public function show(GameEvent $gameEvent): Response
+    public function ranking(Request $request, GameEvent $gameEvent): Response
     {
-        return $this->render('game_event/show.html.twig', [
+        return $this->render('game_event/ranking.html.twig', [
             'game_event' => $gameEvent,
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="game_event_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, GameEvent $gameEvent): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$gameEvent->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($gameEvent);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('game_event_index');
     }
 }

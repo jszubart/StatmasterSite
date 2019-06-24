@@ -5,8 +5,8 @@
 {% block body %}
     <h2>Statistics index</h2>
 
-    <table class="table table-hover">
-        <thead class="thead-dark">
+    <table class="table table-hover" style="width: 80%; margin: auto">
+        <thead class="thead-light">
             <tr>
                 <th>Event Id</th>
                 <th>Player</th>
@@ -30,7 +30,7 @@
                 <th>{{ game_statistic.game.gameDate|date('Y-m-d') }}</th>
                 <td>{{ game_statistic.game.gameCoach}}</td>
                 <th>
-                    <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">
+                    <a class="link" href="{{ path('game_event_ranking',{'id': game_statistic.gameEvent.id }) }}">
                         {{ game_statistic.gameEvent.name }}
                     </a>
                 </th>
@@ -38,7 +38,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">No statistics found</td>
             </tr>
         {% endfor %}
         </tbody>

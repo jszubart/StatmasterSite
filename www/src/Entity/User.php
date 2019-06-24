@@ -48,6 +48,22 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Game", mappedBy="user")
+     */
+    private $games;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Player", mappedBy="user")
+     */
+    private $players;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+        $this->players = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -146,4 +162,38 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGames()
+    {
+        return $this->games;
+    }
+
+    /**
+     * @param mixed $games
+     */
+    public function setGames($games): void
+    {
+        $this->games = $games;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * @param mixed $players
+     */
+    public function setPlayers($players): void
+    {
+        $this->players = $players;
+    }
+
+
 }

@@ -5,8 +5,8 @@
 {% block body %}
     <h2>Games List</h2>
 
-    <table class="table table-hover">
-        <thead class="thead-dark">
+    <table class="table table-hover" style="width: 80%; margin: auto">
+        <thead class="thead-light">
             <tr>
                 <th>Team</th>
                 <th>Coach</th>
@@ -21,22 +21,27 @@
                 <td>{{ game.gameCoach }}</td>
                 <td>{{ game.gameDate|date('Y-m-d H:i') }}</td>
                 <td>
-                    <a href="{{ path('game_edit', {'id': game.id}) }}">
-                        <button type = "button" class = "btn btn-dark btn-sm">Edit</button>
-                    </a>
+                    {%  if is_granted('edit', game) %}
+                        <a href="{{ path('game_edit', {'id': game.id}) }}">
+                            <button type = "button" class = "btn btn-dark btn-sm">Edit</button>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No games found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('game_new') }}">
-        <button type = "button" class = "btn btn-dark">New Game</button>
-    </a>
+    {%  if is_granted('ROLE_USER') %}
+        <div class="margins">
+            <a href="{{ path('game_new') }}">
+                <button type = "button" class = "btn btn-dark">New Game</button>
+            </a>
+        </div>
+    {% endif %}
 
     <script type="text/javascript">
         jQuery(document).ready(function($) {

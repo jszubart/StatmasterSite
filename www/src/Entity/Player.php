@@ -28,6 +28,11 @@ class Player
      */
     private $statistic;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="players")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->statistic = new ArrayCollection();
@@ -120,5 +125,33 @@ class Player
         }
         return $statistics_of_type;
     }
+
+    public function getEventCount(string $event){
+        $statistics = $this->statistic;
+        $count = 0;
+        foreach ($statistics as $statistic) {
+            if($statistic->getGameEvent()->getName() == $event){
+                $count += 1;
+            }
+        }
+        return $count;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
 
 }

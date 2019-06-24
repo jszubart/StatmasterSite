@@ -3,17 +3,22 @@
 {% block title %}Game {{ game.id }} Details{% endblock %}
 
 {% block body %}
-    <h2> Game {{ game.id }}</h2>
-    <h2>Team: {{ game.teamName }}</h2>
-    <h4>Coach: {{ game.gameCoach }}</h4>
+    <h3> Game {{ game.id }}</h3>
+    <h3>Team: {{ game.teamName }}</h3>
+    <h5>Coach: {{ game.gameCoach }}</h5>
     <h5>Date: {{ game.gameDate|date('Y-m-d') }}</h5>
-    <div class="mt-2 mb-2">
-        <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
-            <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
-        </a>
+    <div class="margins">
+        <h4 class="font-weight-normal">Events score: {{ game.getSummaryScore }}</h4>
     </div>
-    <table class="table table-hover">
-        <thead class="thead-dark">
+    {%  if is_granted('edit', game) %}
+        <div class="margins">
+            <a href="{{ path('game_statistic_new') }}?id={{ game.id }}" class="mb-2">
+                <button id="new_event" value="{{ game.id }}" type = "button" class = "btn btn-dark">Create New Event</button>
+            </a>
+        </div>
+    {% endif %}
+    <table class="table table-hover" style="width: 80%; margin: auto">
+        <thead class="thead-light">
         <tr>
             <th>Player</th>
             <th>Event</th>
@@ -23,7 +28,6 @@
         </tr>
         </thead>
         <tbody>
-
             {% for game_statistic in game.statistics %}
                 <tr class="clickable-row" style="cursor: pointer" data-href="{{ path('game_statistic_show', {'id': game_statistic.id}) }}">
                     <th>
@@ -32,37 +36,41 @@
                         </a>
                     </th>
                     <th>
-                        <a class="link" href="{{ path('game_event_show',{'id': game_statistic.gameEvent.id }) }}">
+                        <a class="link" href="{{ path('game_event_ranking',{'id': game_statistic.gameEvent.id }) }}">
                             {{ game_statistic.gameEvent.name }}
                         </a>
                     </th>
                     <th>{{ game_statistic.gameEvent.type }}</th>
                     <td>{{ game_statistic.gameEvent.score}}</td>
                     <td>
-                        {{ include('game_statistic/_delete_form.html.twig') }}
+                        {%  if is_granted('edit', game) %}
+                            {{ include('game_statistic/_delete_form.html.twig') }}
+                        {% endif %}
                     </td>
             </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">No records found, if you want to create some record please click button "Create New Event"</td>
+                    <td colspan="5">No records found, if you want to add event please click button above <strong>"Create New Event"</strong></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <table class="table table-dark">
-        <thead class="thead-dark">
-        <tr>
-            <th>Events summary : {{ game.getSummaryScore }}</th>
-        </tr>
-        </thead>
-    </table>
 
-    <div>
-        <div class="mt-2">
-            <a href="{{ path('game_edit', {'id': game.id}) }}">
-                <button type = "button" class = "btn btn-primary">Edit game details</button>
-            </a>
+    {%  if is_granted('edit', game) %}
+        <div>
+            <div class="mt-2">
+                <a href="{{ path('game_edit', {'id': game.id}) }}">
+                    <button type = "button" class = "btn btn-info">Edit game details</button>
+                </a>
+            </div>
         </div>
+    {% endif %}
+
+    <div class="margins">
+        <a href="{{ path('game_index') }}">
+            <button type = "button" class = "btn btn-primary">Back</button>
+        </a>
+    </div>
     </div>
 
     <script type="text/javascript">
